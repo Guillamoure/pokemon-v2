@@ -1,6 +1,6 @@
 const pokemon = [
-  { name: "Bulbasaur", national_pokedex_num: 1 },
-  { name: "Ivysaur", national_pokedex_num: 2 }
+  { name: "Bulbasaur", nationalPokedexNum: "001" },
+  { name: "Ivysaur", nationalPokedexNum: "002" }
 ];
 
 module.exports = pokemon;

@@ -19,9 +19,39 @@ const types = [
   { name: "Fairy", color: "238 153 172" }
 ];
 
-const weaknesses = [{ type: "Normal", weakness: "Fighting" }];
+const weaknesses = [
+  { type: "Normal", weakness: "Fighting" },
+  { type: "Fire", weakness: "Ground" },
+  { type: "Fire", weakness: "Rock" },
+  { type: "Fire", weakness: "Water" },
+  { type: "Fighting", weakness: "Fairy" },
+  { type: "Fighting", weakness: "Flying" },
+  { type: "Fighting", weakness: "Psychic" },
+  { type: "Water", weakness: "Electric" },
+  { type: "Water", weakness: "Grass" }
+];
+
+const resistances = [
+  { type: "Fire", resistance: "Bug" },
+  { type: "Fire", resistance: "Fairy" },
+  { type: "Fire", resistance: "Fire" },
+  { type: "Fire", resistance: "Grass" },
+  { type: "Fire", resistance: "Ice" },
+  { type: "Fire", resistance: "Steel" },
+  { type: "Fighting", resistance: "Bug" },
+  { type: "Fighting", resistance: "Dark" },
+  { type: "Fighting", resistance: "Rock" },
+  { type: "Water", resistance: "Fire" },
+  { type: "Water", resistance: "Ice" },
+  { type: "Water", resistance: "Steel" },
+  { type: "Water", resistance: "Water" }
+];
+
+const immunities = [{ type: "Normal", immunity: "Ghost" }];
 
 module.exports = {
   types,
-  weaknesses
+  weaknesses,
+  resistances,
+  immunities
 };

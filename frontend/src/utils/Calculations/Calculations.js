@@ -1,8 +1,9 @@
 import { natures } from "../data/natures";
 export const hp = obj => {
-  let { base, iv, ev, level } = hp;
+  let { base, iv, ev, level } = obj;
 
-  return (2 * base + iv + (ev / 4) * level) / 100 + level + 10;
+  let evCalc = parseInt(ev / 4);
+  return parseInt(((2 * base + iv + evCalc) * level) / 100) + level + 10;
 };
 
 export const statCalc = (stat, nature, obj) => {
@@ -14,7 +15,6 @@ export const statCalc = (stat, nature, obj) => {
     natureMod = 0.9;
   }
   const evCalc = parseInt(ev / 4);
-  console.log(2 * base + iv + evCalc);
   return parseInt(
     (parseInt(((2 * base + iv + evCalc) * level) / 100) + 5) * natureMod
   );

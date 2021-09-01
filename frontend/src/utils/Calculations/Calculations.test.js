@@ -1,11 +1,6 @@
-export const hp = obj => {
-  let { base, iv, ev, level } = hp;
+import { statCalc } from "./Calculations";
 
-  return (2 * base + iv + (ev / 4) * level) / 100 + level + 10;
-};
-
-export const stat = obj => {
-  let { base, iv, ev, level, nature } = hp;
-
-  return ((2 * base + iv + (ev / 4) * level) / 100 + 5) * nature;
-};
+test("calculates stat with nature", () => {
+  let obj = { base: 130, iv: 12, ev: 190, level: 78 };
+  expect(statCalc("attack", "adamant", obj)).toBe(278);
+});

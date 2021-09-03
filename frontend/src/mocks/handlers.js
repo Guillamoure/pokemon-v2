@@ -9,5 +9,13 @@ export const handlers = [
         national_pokedex_num: 132
       })
     );
+  }),
+  rest.get(backend("pokemon/Ditto"), (req, res, ctx) => {
+    return res(
+      ctx.json({
+        name: "Ditto",
+        national_pokedex_num: 132
+      })
+    );
   })
 ];

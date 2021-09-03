@@ -13,7 +13,6 @@ const PokemonInfo = ({ pokemonObj }) => {
       fetch(backend("pokemon/" + identifier))
         .then(r => r.json())
         .then(data => {
-          console.log(data);
           setPokemonData(data);
         });
     }

@@ -10,20 +10,36 @@ const onlyNumMockPokemonData = {
   national_pokedex_num: 132
 };
 
+const onlyNameMockPokemonData = {
+  name: "Ditto"
+};
+
 test.todo("renders without error");
 
 test("render with complete prop data", () => {
   render(<PokemonInfo pokemonObj={mockPokemonData} />);
+
   const pokemonName = screen.getByText(mockPokemonData.name);
   const pokemonNum = screen.getByText(mockPokemonData.national_pokedex_num);
+
   expect(pokemonName).toBeInTheDocument();
   expect(pokemonNum).toBeInTheDocument();
 });
 
 test("render with identifier national_pokedex_num prop data", async () => {
   render(<PokemonInfo pokemonObj={onlyNumMockPokemonData} />);
+
   const pokemonName = await screen.findByText(mockPokemonData.name);
+
   expect(pokemonName).toBeInTheDocument();
 });
 
-test.todo("render with identifier name prop data");
+test("render with identifier name prop data", async () => {
+  render(<PokemonInfo pokemonObj={onlyNameMockPokemonData} />);
+
+  const pokemonNum = await screen.findByText(
+    mockPokemonData.national_pokedex_num
+  );
+
+  expect(pokemonNum).toBeInTheDocument();
+});

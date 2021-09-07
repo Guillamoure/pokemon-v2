@@ -1,6 +1,8 @@
 import React from "react";
 import { backend } from "../../constants/urls";
 
+import PokemonDetails from "./PokemonDetails";
+
 const PokemonInfo = ({ pokemonObj }) => {
   const [pokemonData, setPokemonData] = React.useState(null);
 
@@ -18,18 +20,12 @@ const PokemonInfo = ({ pokemonObj }) => {
     }
   }, [pokemonObj]);
 
-  const data = tag => {
-    if (!pokemonData) {
-      return pokemonObj[tag] ?? "";
-    }
-    return pokemonData[tag];
-  };
+  const data = pokemonData || pokemonObj;
 
   return (
-    <section>
-      <h2>{data("name")}</h2>
-      <p>{data("national_pokedex_num")}</p>
-    </section>
+    <main>
+      <PokemonDetails pokemon={data} />
+    </main>
   );
 };
 

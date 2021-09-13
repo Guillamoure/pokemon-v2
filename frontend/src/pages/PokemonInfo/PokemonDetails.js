@@ -4,13 +4,15 @@ const PokemonDetails = ({ pokemon }) => {
   const {
     name,
     national_pokedex_num: num,
+    official_artwork,
     front_sprite,
     back_sprite
   } = pokemon;
 
   const sprite = () => {
-    let src = front_sprite || back_sprite || "missingno.png";
-    let alt = name;
+    let src =
+      official_artwork || front_sprite || back_sprite || "missingno.png";
+    let alt = name?.toLowerCase() + " artwork" ?? null;
     if (src === "missingno.png") {
       alt = "missingno";
     }

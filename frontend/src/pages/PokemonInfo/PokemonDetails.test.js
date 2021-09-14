@@ -33,7 +33,28 @@ describe("Artwork", () => {
 
     expect(img).toHaveProperty("alt", "ditto artwork");
   });
-  // test.todo("displays front sprite if official artwork is not present");
+  test("displays front sprite if official artwork is not present", () => {
+    render(
+      <PokemonDetails pokemon={{ ...pokemonData, official_artwork: null }} />
+    );
+
+    const img = screen.getByRole("img");
+
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+    );
+    expect(img).not.toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
+    );
+    expect(img).not.toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+    );
+
+    expect(img).toHaveProperty("alt", "ditto artwork");
+  });
   // test.todo("displays back sprite if front sprite is not present");
   test("displays default artwork with no artwork present", () => {
     render(<PokemonDetails pokemon={{}} />);

@@ -1,29 +1,59 @@
 import React from "react";
 
 const PokemonDetails = ({ pokemon }) => {
-  const {
-    name,
-    national_pokedex_num: num,
-    official_artwork,
-    front_sprite,
-    back_sprite
-  } = pokemon;
+  const [activeImageKey, setActiveImageKey] = React.useState(null);
 
-  const sprite = () => {
-    let src =
-      official_artwork || front_sprite || back_sprite || "missingno.png";
-    let alt = name?.toLowerCase() + " artwork" ?? null;
-    if (src === "missingno.png") {
-      alt = "missingno";
+  React.useEffect(() => {
+    if (!activeImageKey) {
+      if (pokemon.official_artwork) {
+        setActiveImageKey("official_artwork");
+      } else if (pokemon.front_sprite) {
+        setActiveImageKey("front_sprite");
+      } else if (pokemon.back_sprite) {
+        setActiveImageKey("back_sprite");
+      }
+    }
+  }, [pokemon]);
+
+  const { name, national_pokedex_num: num } = pokemon;
+
+  const image = () => {
+    let src = "missingno.png";
+    let alt = "missingno";
+    if (activeImageKey) {
+      src = pokemon[activeImageKey];
+      alt = name?.toLowerCase() + " artwork" ?? null;
     }
     return <img src={src} alt={alt} />;
+  };
+
+  const updateImage = () => {
+    if (activeImageKey === "official_artwork") {
+      if (pokemon.front_sprite) {
+        setActiveImageKey("front_sprite");
+      } else if (pokemon.back_sprite) {
+        setActiveImageKey("back_sprite");
+      }
+    } else if (activeImageKey === "front_sprite") {
+      if (pokemon.back_sprite) {
+        setActiveImageKey("back_sprite");
+      } else if (pokemon.official_artwork) {
+        setActiveImageKey("official_artwork");
+      }
+    } else if (activeImageKey === "back_sprite") {
+      if (pokemon.official_artwork) {
+        setActiveImageKey("official_artwork");
+      } else if (pokemon.front_sprite) {
+        setActiveImageKey("front_sprite");
+      }
+    }
   };
 
   return (
     <section>
       <h2>{name}</h2>
       <span>{num}</span>
-      <div>{sprite()}</div>
+      <div onClick={updateImage}>{image()}</div>
     </section>
   );
 };

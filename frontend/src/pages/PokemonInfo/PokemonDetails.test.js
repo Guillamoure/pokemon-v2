@@ -1,4 +1,5 @@
 import { screen, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import PokemonDetails from "./PokemonDetails";
 
@@ -84,7 +85,34 @@ describe("Artwork", () => {
     const img = screen.getByRole("img");
     expect(img).toHaveProperty("alt", "missingno");
   });
-  // test.todo("can click on carousel to view a different image");
+  test("can click on carousel to view a different image", () => {
+    render(<PokemonDetails pokemon={pokemonData} />);
+
+    const img = screen.getByRole("img");
+
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
+    );
+
+    userEvent.click(img);
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+    );
+
+    userEvent.click(img);
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+    );
+
+    userEvent.click(img);
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
+    );
+  });
   // test.todo("carousel will not do anything if there is no other image");
   // test.todo("displays thumbnail image above larger artwork");
   // test.todo("displays default image with no thumbnail image");

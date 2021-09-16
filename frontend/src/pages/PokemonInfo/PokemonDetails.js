@@ -27,6 +27,12 @@ const PokemonDetails = ({ pokemon }) => {
     return <img src={src} alt={alt} />;
   };
 
+  const thumbnail = () => {
+    let src = icon ?? "question.png";
+    let alt = icon ? name?.toLowerCase() + " icon" ?? "" : "no icon";
+    return <img src={src} alt={alt} />;
+  };
+
   const updateImage = () => {
     if (activeImageKey === "official_artwork") {
       if (pokemon.front_sprite) {
@@ -53,9 +59,7 @@ const PokemonDetails = ({ pokemon }) => {
     <section>
       <h2>{name}</h2>
       <span>{num}</span>
-      <span>
-        <img src={icon} alt={name?.toLowerCase() + " icon" ?? ""} />
-      </span>
+      <span>{thumbnail()}</span>
       <div onClick={updateImage}>{image()}</div>
     </section>
   );

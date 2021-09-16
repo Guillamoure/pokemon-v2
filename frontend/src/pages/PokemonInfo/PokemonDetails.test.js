@@ -157,7 +157,12 @@ describe("Artwork", () => {
       "https://archives.bulbagarden.net/media/upload/9/92/132MS8.png"
     );
   });
-  // test.todo("displays default image with no thumbnail image");
+  test("displays default image with no thumbnail image", () => {
+    render(<PokemonDetails pokemon={{ ...pokemonData, icon: null }} />);
+    const thumbnail = screen.getByAltText("no icon");
+
+    expect(thumbnail).toHaveProperty("src", "http://localhost/question.png");
+  });
   // test.todo("shiny toggle will update front and back sprite");
   // test.todo(
   //   "shiny toggle will not do anything if there is no front or back sprite"

@@ -15,14 +15,14 @@ const PokemonDetails = ({ pokemon }) => {
     }
   }, [pokemon]);
 
-  const { name, national_pokedex_num: num } = pokemon;
+  const { name, national_pokedex_num: num, icon } = pokemon;
 
   const image = () => {
     let src = "missingno.png";
     let alt = "missingno";
     if (activeImageKey) {
       src = pokemon[activeImageKey];
-      alt = name?.toLowerCase() + " artwork" ?? null;
+      alt = name?.toLowerCase() + "-artwork" ?? null;
     }
     return <img src={src} alt={alt} />;
   };
@@ -53,6 +53,9 @@ const PokemonDetails = ({ pokemon }) => {
     <section>
       <h2>{name}</h2>
       <span>{num}</span>
+      <span>
+        <img src={icon} alt={name?.toLowerCase() + " icon" ?? ""} />
+      </span>
       <div onClick={updateImage}>{image()}</div>
     </section>
   );

@@ -10,14 +10,17 @@ let pokemonData = {
   front_sprite:
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
   back_sprite:
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png",
+  icon: "https://archives.bulbagarden.net/media/upload/9/92/132MS8.png"
 };
 
 describe("Artwork", () => {
   test("displays official artwork if it exists", () => {
     render(<PokemonDetails pokemon={pokemonData} />);
 
-    const img = screen.getByRole("img");
+    const img = screen.getByRole("img", {
+      name: `${pokemonData.name.toLowerCase()}-artwork`
+    });
 
     expect(img).toHaveProperty(
       "src",
@@ -32,14 +35,16 @@ describe("Artwork", () => {
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
     );
 
-    expect(img).toHaveProperty("alt", "ditto artwork");
+    expect(img).toHaveProperty("alt", "ditto-artwork");
   });
   test("displays front sprite if official artwork is not present", () => {
     render(
       <PokemonDetails pokemon={{ ...pokemonData, official_artwork: null }} />
     );
 
-    const img = screen.getByRole("img");
+    const img = screen.getByRole("img", {
+      name: `${pokemonData.name.toLowerCase()}-artwork`
+    });
 
     expect(img).toHaveProperty(
       "src",
@@ -54,7 +59,7 @@ describe("Artwork", () => {
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
     );
 
-    expect(img).toHaveProperty("alt", "ditto artwork");
+    expect(img).toHaveProperty("alt", "ditto-artwork");
   });
   test("displays back sprite if front sprite and official artwork is not present", () => {
     render(
@@ -63,7 +68,9 @@ describe("Artwork", () => {
       />
     );
 
-    const img = screen.getByRole("img");
+    const img = screen.getByRole("img", {
+      name: `${pokemonData.name.toLowerCase()}-artwork`
+    });
 
     expect(img).toHaveProperty(
       "src",
@@ -78,17 +85,21 @@ describe("Artwork", () => {
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
     );
 
-    expect(img).toHaveProperty("alt", "ditto artwork");
+    expect(img).toHaveProperty("alt", "ditto-artwork");
   });
   test("displays default artwork with no artwork present", () => {
     render(<PokemonDetails pokemon={{}} />);
-    const img = screen.getByRole("img");
+    const img = screen.getByRole("img", {
+      name: "missingno"
+    });
     expect(img).toHaveProperty("alt", "missingno");
   });
   test("can click on carousel to view a different image", () => {
     render(<PokemonDetails pokemon={pokemonData} />);
 
-    const img = screen.getByRole("img");
+    const img = screen.getByRole("img", {
+      name: `${pokemonData.name.toLowerCase()}-artwork`
+    });
 
     expect(img).toHaveProperty(
       "src",
@@ -120,7 +131,9 @@ describe("Artwork", () => {
       />
     );
 
-    const img = screen.getByRole("img");
+    const img = screen.getByRole("img", {
+      name: `${pokemonData.name.toLowerCase()}-artwork`
+    });
 
     expect(img).toHaveProperty(
       "src",
@@ -133,7 +146,17 @@ describe("Artwork", () => {
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
     );
   });
-  // test.todo("displays thumbnail image above larger artwork");
+  test("displays thumbnail image above larger artwork", () => {
+    render(<PokemonDetails pokemon={pokemonData} />);
+    const thumbnail = screen.getByAltText(
+      `${pokemonData.name.toLowerCase()} icon`
+    );
+    expect(thumbnail).toBeInTheDocument();
+    expect(thumbnail).toHaveProperty(
+      "src",
+      "https://archives.bulbagarden.net/media/upload/9/92/132MS8.png"
+    );
+  });
   // test.todo("displays default image with no thumbnail image");
   // test.todo("shiny toggle will update front and back sprite");
   // test.todo(

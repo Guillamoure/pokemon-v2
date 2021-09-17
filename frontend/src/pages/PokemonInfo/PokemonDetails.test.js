@@ -11,7 +11,11 @@ let pokemonData = {
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
   back_sprite:
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png",
-  icon: "https://archives.bulbagarden.net/media/upload/9/92/132MS8.png"
+  icon: "https://archives.bulbagarden.net/media/upload/9/92/132MS8.png",
+  front_sprite_shiny:
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png",
+  back_sprite_shiny:
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/132.png"
 };
 
 describe("Artwork", () => {
@@ -163,8 +167,43 @@ describe("Artwork", () => {
 
     expect(thumbnail).toHaveProperty("src", "http://localhost/question.png");
   });
-  // test.todo("shiny toggle will update front and back sprite");
+  test("shiny toggle will update front and back sprite", () => {
+    render(<PokemonDetails pokemon={pokemonData} />);
+
+    const shinyCheckbox = screen.getByRole("checkbox", { name: "Shiny" });
+    userEvent.click(shinyCheckbox);
+
+    expect(shinyCheckbox).toBeChecked();
+
+    const img = screen.getByRole("img", {
+      name: `${pokemonData.name.toLowerCase()}-artwork`
+    });
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
+    );
+
+    userEvent.click(img);
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+    );
+
+    userEvent.click(img);
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/132.png"
+    );
+
+    userEvent.click(shinyCheckbox);
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+    );
+    expect(shinyCheckbox).not.toBeChecked();
+  });
   // test.todo(
   //   "shiny toggle will not do anything if there is no front or back sprite"
   // );
+  // test.todo("shiny toggle will update thumbnail")
 });

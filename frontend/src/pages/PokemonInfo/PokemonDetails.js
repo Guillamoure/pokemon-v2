@@ -2,6 +2,7 @@ import React from "react";
 
 const PokemonDetails = ({ pokemon }) => {
   const [activeImageKey, setActiveImageKey] = React.useState(null);
+  const [shinyCheckbox, toggleShinyCheckbox] = React.useState(false);
 
   React.useEffect(() => {
     if (!activeImageKey) {
@@ -22,9 +23,12 @@ const PokemonDetails = ({ pokemon }) => {
     let alt = "missingno";
     if (activeImageKey) {
       src = pokemon[activeImageKey];
+      if (shinyCheckbox && activeImageKey !== "official_artwork") {
+        src = pokemon[activeImageKey + "_shiny"];
+      }
       alt = name?.toLowerCase() + "-artwork" ?? null;
     }
-    return <img src={src} alt={alt} />;
+    return <img src={src} alt={alt} onClick={updateImage} />;
   };
 
   const thumbnail = () => {
@@ -60,7 +64,15 @@ const PokemonDetails = ({ pokemon }) => {
       <h2>{name}</h2>
       <span>{num}</span>
       <span>{thumbnail()}</span>
-      <div onClick={updateImage}>{image()}</div>
+      <div>
+        {image()}
+        <input
+          type="checkbox"
+          checked={shinyCheckbox}
+          title="Shiny"
+          onChange={() => toggleShinyCheckbox(!shinyCheckbox)}
+        />
+      </div>
     </section>
   );
 };

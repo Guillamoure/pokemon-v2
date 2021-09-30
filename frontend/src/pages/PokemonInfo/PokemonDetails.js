@@ -16,7 +16,13 @@ const PokemonDetails = ({ pokemon }) => {
     }
   }, [pokemon]);
 
-  const { name, national_pokedex_num: num, icon } = pokemon;
+  const {
+    name,
+    national_pokedex_num: num,
+    icon,
+    front_sprite_shiny,
+    back_sprite_shiny
+  } = pokemon;
 
   const image = () => {
     let src = "missingno.png";
@@ -59,6 +65,12 @@ const PokemonDetails = ({ pokemon }) => {
     }
   };
 
+  const shinyToggleHanlder = () => {
+    if (front_sprite_shiny || back_sprite_shiny) {
+      toggleShinyCheckbox(!shinyCheckbox);
+    }
+  };
+
   return (
     <section>
       <h2>{name}</h2>
@@ -70,7 +82,7 @@ const PokemonDetails = ({ pokemon }) => {
           type="checkbox"
           checked={shinyCheckbox}
           title="Shiny"
-          onChange={() => toggleShinyCheckbox(!shinyCheckbox)}
+          onChange={shinyToggleHanlder}
         />
       </div>
     </section>

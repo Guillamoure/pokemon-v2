@@ -202,8 +202,45 @@ describe("Artwork", () => {
     );
     expect(shinyCheckbox).not.toBeChecked();
   });
-  // test.todo(
-  //   "shiny toggle will not do anything if there is no front or back sprite"
-  // );
-  // test.todo("shiny toggle will update thumbnail")
+  test("shiny toggle will not do anything if there is no front shiny and back shiny sprite", () => {
+    render(
+      <PokemonDetails
+        pokemon={{
+          ...pokemonData,
+          front_sprite_shiny: null,
+          back_sprite_shiny: null
+        }}
+      />
+    );
+
+    const shinyCheckbox = screen.getByRole("checkbox", { name: "Shiny" });
+
+    expect(shinyCheckbox).not.toBeChecked();
+    const img = screen.getByRole("img", { name: `ditto-artwork` });
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
+    );
+
+    userEvent.click(img);
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+    );
+
+    userEvent.click(shinyCheckbox);
+    expect(shinyCheckbox).not.toBeChecked();
+    expect(img).toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+    );
+    expect(img).not.toHaveProperty(
+      "src",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png"
+    );
+  });
+  test.todo("shiny toggle will update thumbnail");
+  test.todo(
+    "shiny toggle will not update thumbnail if there is no shiny thumbnail"
+  );
 });
